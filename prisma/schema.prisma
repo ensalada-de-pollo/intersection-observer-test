@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model WebtoonSceneStat {
+  id             Int      @id @default(autoincrement())
+  episodeId      Int      @map("episode_id")
+  sceneId        String   @map("scene_id")
+  viewDate       DateTime @map("view_date")
+  totalDuration  Float    @default(0) @map("total_duration")
+  viewCount      Int      @default(0) @map("view_count")
+
+  @@unique([viewDate, episodeId, sceneId], name: "daily_scene_unique_constraint")
+  @@map("webtoon_scene_stats")
+}

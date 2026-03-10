@@ -4,8 +4,7 @@ import { useEffect, useRef } from 'react';
 import { useParams } from 'next/navigation';
 
 export default function WebtoonPage() {
-  const params = useParams();
-  const episodeId = params.id;
+  const episodeId = 1;
   
   // 데이터 저장용 (누적 시간)
   const statsRef = useRef<{ [key: string]: number }>({});

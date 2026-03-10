@@ -1,3 +1,5 @@
+export const runtime = 'nodejs';
+
 export const metadata = {
   title: 'Webtoon Stats Test',
   description: 'Intersection Observer Testing',

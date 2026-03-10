@@ -5,8 +5,18 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { episodeId, stats } = body;
-    
-    // SQLite 날짜 정규화 (시간 제거)
+
+    // 1. 데이터 검증: episodeId가 없거나 숫자가 아니면 에러 반환
+    const parsedEpisodeId = Number(episodeId);
+    if (!episodeId || isNaN(parsedEpisodeId)) {
+      console.error('❌ 유효하지 않은 episodeId:', episodeId);
+      return NextResponse.json({ error: 'Invalid episodeId' }, { status: 400 });
+    }
+
+    if (!stats || Object.keys(stats).length === 0) {
+      return NextResponse.json({ success: true, message: 'No stats to flush' });
+    }
+
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
 
@@ -15,19 +25,19 @@ export async function POST(request: Request) {
         where: {
           daily_scene_unique_constraint: {
             viewDate: today,
-            episodeId: Number(episodeId),
+            episodeId: parsedEpisodeId, // 검증된 숫자 사용
             sceneId: sceneId,
           },
         },
         update: {
-          totalDuration: { increment: duration as number },
+          totalDuration: { increment: Number(duration) },
           viewCount: { increment: 1 },
         },
         create: {
           viewDate: today,
-          episodeId: Number(episodeId),
+          episodeId: parsedEpisodeId, // 검증된 숫자 사용
           sceneId: sceneId,
-          totalDuration: duration as number,
+          totalDuration: Number(duration),
           viewCount: 1,
         },
       });
@@ -37,6 +47,24 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Flush Error:', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
+}
+
+export async function GET() {
+  try {
+    // 모든 통계 데이터를 최신순으로 가져옴
+    const stats = await prisma.webtoonSceneStat.findMany({
+      orderBy: [
+        { viewDate: 'desc' },
+        { episodeId: 'asc' },
+        { sceneId: 'asc' }
+      ]
+    });
+
+    return NextResponse.json(stats);
+  } catch (error) {
+    console.error('Fetch Stats Error:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

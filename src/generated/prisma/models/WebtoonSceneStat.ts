@@ -30,6 +30,7 @@ export type WebtoonSceneStatAvgAggregateOutputType = {
   id: number | null
   episodeId: number | null
   totalDuration: number | null
+  rawDuration: number | null
   viewCount: number | null
 }
 
@@ -37,6 +38,7 @@ export type WebtoonSceneStatSumAggregateOutputType = {
   id: number | null
   episodeId: number | null
   totalDuration: number | null
+  rawDuration: number | null
   viewCount: number | null
 }
 
@@ -46,6 +48,7 @@ export type WebtoonSceneStatMinAggregateOutputType = {
   sceneId: string | null
   viewDate: Date | null
   totalDuration: number | null
+  rawDuration: number | null
   viewCount: number | null
 }
 
@@ -55,6 +58,7 @@ export type WebtoonSceneStatMaxAggregateOutputType = {
   sceneId: string | null
   viewDate: Date | null
   totalDuration: number | null
+  rawDuration: number | null
   viewCount: number | null
 }
 
@@ -64,6 +68,7 @@ export type WebtoonSceneStatCountAggregateOutputType = {
   sceneId: number
   viewDate: number
   totalDuration: number
+  rawDuration: number
   viewCount: number
   _all: number
 }
@@ -73,6 +78,7 @@ export type WebtoonSceneStatAvgAggregateInputType = {
   id?: true
   episodeId?: true
   totalDuration?: true
+  rawDuration?: true
   viewCount?: true
 }
 
@@ -80,6 +86,7 @@ export type WebtoonSceneStatSumAggregateInputType = {
   id?: true
   episodeId?: true
   totalDuration?: true
+  rawDuration?: true
   viewCount?: true
 }
 
@@ -89,6 +96,7 @@ export type WebtoonSceneStatMinAggregateInputType = {
   sceneId?: true
   viewDate?: true
   totalDuration?: true
+  rawDuration?: true
   viewCount?: true
 }
 
@@ -98,6 +106,7 @@ export type WebtoonSceneStatMaxAggregateInputType = {
   sceneId?: true
   viewDate?: true
   totalDuration?: true
+  rawDuration?: true
   viewCount?: true
 }
 
@@ -107,6 +116,7 @@ export type WebtoonSceneStatCountAggregateInputType = {
   sceneId?: true
   viewDate?: true
   totalDuration?: true
+  rawDuration?: true
   viewCount?: true
   _all?: true
 }
@@ -203,6 +213,7 @@ export type WebtoonSceneStatGroupByOutputType = {
   sceneId: string
   viewDate: Date
   totalDuration: number
+  rawDuration: number
   viewCount: number
   _count: WebtoonSceneStatCountAggregateOutputType | null
   _avg: WebtoonSceneStatAvgAggregateOutputType | null
@@ -235,6 +246,7 @@ export type WebtoonSceneStatWhereInput = {
   sceneId?: Prisma.StringFilter<"WebtoonSceneStat"> | string
   viewDate?: Prisma.DateTimeFilter<"WebtoonSceneStat"> | Date | string
   totalDuration?: Prisma.FloatFilter<"WebtoonSceneStat"> | number
+  rawDuration?: Prisma.FloatFilter<"WebtoonSceneStat"> | number
   viewCount?: Prisma.IntFilter<"WebtoonSceneStat"> | number
 }
 
@@ -244,12 +256,12 @@ export type WebtoonSceneStatOrderByWithRelationInput = {
   sceneId?: Prisma.SortOrder
   viewDate?: Prisma.SortOrder
   totalDuration?: Prisma.SortOrder
+  rawDuration?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
 }
 
 export type WebtoonSceneStatWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  daily_scene_unique_constraint?: Prisma.WebtoonSceneStatDaily_scene_unique_constraintCompoundUniqueInput
   AND?: Prisma.WebtoonSceneStatWhereInput | Prisma.WebtoonSceneStatWhereInput[]
   OR?: Prisma.WebtoonSceneStatWhereInput[]
   NOT?: Prisma.WebtoonSceneStatWhereInput | Prisma.WebtoonSceneStatWhereInput[]
@@ -257,8 +269,9 @@ export type WebtoonSceneStatWhereUniqueInput = Prisma.AtLeast<{
   sceneId?: Prisma.StringFilter<"WebtoonSceneStat"> | string
   viewDate?: Prisma.DateTimeFilter<"WebtoonSceneStat"> | Date | string
   totalDuration?: Prisma.FloatFilter<"WebtoonSceneStat"> | number
+  rawDuration?: Prisma.FloatFilter<"WebtoonSceneStat"> | number
   viewCount?: Prisma.IntFilter<"WebtoonSceneStat"> | number
-}, "id" | "daily_scene_unique_constraint">
+}, "id">
 
 export type WebtoonSceneStatOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -266,6 +279,7 @@ export type WebtoonSceneStatOrderByWithAggregationInput = {
   sceneId?: Prisma.SortOrder
   viewDate?: Prisma.SortOrder
   totalDuration?: Prisma.SortOrder
+  rawDuration?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
   _count?: Prisma.WebtoonSceneStatCountOrderByAggregateInput
   _avg?: Prisma.WebtoonSceneStatAvgOrderByAggregateInput
@@ -283,6 +297,7 @@ export type WebtoonSceneStatScalarWhereWithAggregatesInput = {
   sceneId?: Prisma.StringWithAggregatesFilter<"WebtoonSceneStat"> | string
   viewDate?: Prisma.DateTimeWithAggregatesFilter<"WebtoonSceneStat"> | Date | string
   totalDuration?: Prisma.FloatWithAggregatesFilter<"WebtoonSceneStat"> | number
+  rawDuration?: Prisma.FloatWithAggregatesFilter<"WebtoonSceneStat"> | number
   viewCount?: Prisma.IntWithAggregatesFilter<"WebtoonSceneStat"> | number
 }
 
@@ -291,6 +306,7 @@ export type WebtoonSceneStatCreateInput = {
   sceneId: string
   viewDate: Date | string
   totalDuration?: number
+  rawDuration?: number
   viewCount?: number
 }
 
@@ -300,6 +316,7 @@ export type WebtoonSceneStatUncheckedCreateInput = {
   sceneId: string
   viewDate: Date | string
   totalDuration?: number
+  rawDuration?: number
   viewCount?: number
 }
 
@@ -308,6 +325,7 @@ export type WebtoonSceneStatUpdateInput = {
   sceneId?: Prisma.StringFieldUpdateOperationsInput | string
   viewDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalDuration?: Prisma.FloatFieldUpdateOperationsInput | number
+  rawDuration?: Prisma.FloatFieldUpdateOperationsInput | number
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -317,6 +335,7 @@ export type WebtoonSceneStatUncheckedUpdateInput = {
   sceneId?: Prisma.StringFieldUpdateOperationsInput | string
   viewDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalDuration?: Prisma.FloatFieldUpdateOperationsInput | number
+  rawDuration?: Prisma.FloatFieldUpdateOperationsInput | number
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -326,6 +345,7 @@ export type WebtoonSceneStatCreateManyInput = {
   sceneId: string
   viewDate: Date | string
   totalDuration?: number
+  rawDuration?: number
   viewCount?: number
 }
 
@@ -334,6 +354,7 @@ export type WebtoonSceneStatUpdateManyMutationInput = {
   sceneId?: Prisma.StringFieldUpdateOperationsInput | string
   viewDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalDuration?: Prisma.FloatFieldUpdateOperationsInput | number
+  rawDuration?: Prisma.FloatFieldUpdateOperationsInput | number
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -343,13 +364,8 @@ export type WebtoonSceneStatUncheckedUpdateManyInput = {
   sceneId?: Prisma.StringFieldUpdateOperationsInput | string
   viewDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   totalDuration?: Prisma.FloatFieldUpdateOperationsInput | number
+  rawDuration?: Prisma.FloatFieldUpdateOperationsInput | number
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
-}
-
-export type WebtoonSceneStatDaily_scene_unique_constraintCompoundUniqueInput = {
-  viewDate: Date | string
-  episodeId: number
-  sceneId: string
 }
 
 export type WebtoonSceneStatCountOrderByAggregateInput = {
@@ -358,6 +374,7 @@ export type WebtoonSceneStatCountOrderByAggregateInput = {
   sceneId?: Prisma.SortOrder
   viewDate?: Prisma.SortOrder
   totalDuration?: Prisma.SortOrder
+  rawDuration?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
 }
 
@@ -365,6 +382,7 @@ export type WebtoonSceneStatAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   episodeId?: Prisma.SortOrder
   totalDuration?: Prisma.SortOrder
+  rawDuration?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
 }
 
@@ -374,6 +392,7 @@ export type WebtoonSceneStatMaxOrderByAggregateInput = {
   sceneId?: Prisma.SortOrder
   viewDate?: Prisma.SortOrder
   totalDuration?: Prisma.SortOrder
+  rawDuration?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
 }
 
@@ -383,6 +402,7 @@ export type WebtoonSceneStatMinOrderByAggregateInput = {
   sceneId?: Prisma.SortOrder
   viewDate?: Prisma.SortOrder
   totalDuration?: Prisma.SortOrder
+  rawDuration?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
 }
 
@@ -390,6 +410,7 @@ export type WebtoonSceneStatSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   episodeId?: Prisma.SortOrder
   totalDuration?: Prisma.SortOrder
+  rawDuration?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
 }
 
@@ -425,6 +446,7 @@ export type WebtoonSceneStatSelect<ExtArgs extends runtime.Types.Extensions.Inte
   sceneId?: boolean
   viewDate?: boolean
   totalDuration?: boolean
+  rawDuration?: boolean
   viewCount?: boolean
 }, ExtArgs["result"]["webtoonSceneStat"]>
 
@@ -434,6 +456,7 @@ export type WebtoonSceneStatSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   sceneId?: boolean
   viewDate?: boolean
   totalDuration?: boolean
+  rawDuration?: boolean
   viewCount?: boolean
 }, ExtArgs["result"]["webtoonSceneStat"]>
 
@@ -443,6 +466,7 @@ export type WebtoonSceneStatSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   sceneId?: boolean
   viewDate?: boolean
   totalDuration?: boolean
+  rawDuration?: boolean
   viewCount?: boolean
 }, ExtArgs["result"]["webtoonSceneStat"]>
 
@@ -452,10 +476,11 @@ export type WebtoonSceneStatSelectScalar = {
   sceneId?: boolean
   viewDate?: boolean
   totalDuration?: boolean
+  rawDuration?: boolean
   viewCount?: boolean
 }
 
-export type WebtoonSceneStatOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "episodeId" | "sceneId" | "viewDate" | "totalDuration" | "viewCount", ExtArgs["result"]["webtoonSceneStat"]>
+export type WebtoonSceneStatOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "episodeId" | "sceneId" | "viewDate" | "totalDuration" | "rawDuration" | "viewCount", ExtArgs["result"]["webtoonSceneStat"]>
 
 export type $WebtoonSceneStatPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "WebtoonSceneStat"
@@ -466,6 +491,7 @@ export type $WebtoonSceneStatPayload<ExtArgs extends runtime.Types.Extensions.In
     sceneId: string
     viewDate: Date
     totalDuration: number
+    rawDuration: number
     viewCount: number
   }, ExtArgs["result"]["webtoonSceneStat"]>
   composites: {}
@@ -895,6 +921,7 @@ export interface WebtoonSceneStatFieldRefs {
   readonly sceneId: Prisma.FieldRef<"WebtoonSceneStat", 'String'>
   readonly viewDate: Prisma.FieldRef<"WebtoonSceneStat", 'DateTime'>
   readonly totalDuration: Prisma.FieldRef<"WebtoonSceneStat", 'Float'>
+  readonly rawDuration: Prisma.FieldRef<"WebtoonSceneStat", 'Float'>
   readonly viewCount: Prisma.FieldRef<"WebtoonSceneStat", 'Int'>
 }
     
@@ -1072,6 +1099,11 @@ export type WebtoonSceneStatFindManyArgs<ExtArgs extends runtime.Types.Extension
    * Skip the first `n` WebtoonSceneStats.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of WebtoonSceneStats.
+   */
   distinct?: Prisma.WebtoonSceneStatScalarFieldEnum | Prisma.WebtoonSceneStatScalarFieldEnum[]
 }
 

@@ -16,8 +16,7 @@ model WebtoonSceneStat {
   sceneId        String   @map("scene_id")
   viewDate       DateTime @map("view_date")
   totalDuration  Float    @default(0) @map("total_duration")
+  rawDuration    Float    @default(0) @map("rawDuration")
   viewCount      Int      @default(0) @map("view_count")
-
-  @@unique([viewDate, episodeId, sceneId], name: "daily_scene_unique_constraint")
   @@map("webtoon_scene_stats")
 }

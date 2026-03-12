@@ -9,10 +9,10 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
-    "@prisma/adapter-better-sqlite3": "^7.4.2",
-    "@prisma/client": "^7.4.2",
+    "@prisma/adapter-better-sqlite3": "^7.5.0",
+    "@prisma/client": "^7.5.0",
     "next": "latest",
-    "prisma": "^7.4.2",
+    "prisma": "^7.5.0",
     "react": "latest",
     "react-dom": "latest"
   },

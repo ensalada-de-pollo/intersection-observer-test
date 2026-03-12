@@ -2,10 +2,40 @@
 
 import { useEffect, useRef } from 'react';
 import { useParams } from 'next/navigation';
+import example from '../../public/example.jpg';
+
+const smoothStats = (
+  raw: Record<string, number>,
+  keys: string[],
+  sigma = 2
+): Record<string, number> => {
+  const vals = keys.map(k => raw[k] ?? 0);
+  const radius = Math.ceil(3 * sigma); // 이 범위 밖은 weight ≈ 0이므로 스킵
+
+  const smoothed = vals.map((_, i) => {
+    let wSum = 0;
+    let wTotal = 0;
+
+    const lo = Math.max(0, i - radius);
+    const hi = Math.min(vals.length - 1, i + radius);
+
+    for (let j = lo; j <= hi; j++) {
+      const w = Math.exp(-((i - j) ** 2) / (2 * sigma ** 2));
+      wSum += vals[j] * w;
+      wTotal += w;
+    }
+    return wSum / wTotal;
+  });
+
+  // pull-up only: 원본 > 스무딩이면 원본 유지, 아니면 스무딩 값으로 올림
+  return Object.fromEntries(
+    keys.map((k, i) => [k, smoothed[i]])
+  );
+};
 
 export default function WebtoonPage() {
   const episodeId = 1;
-  const SECTION_COUNT = 50;
+  const SECTION_COUNT = 100;
   const sections = Array.from({ length: SECTION_COUNT }, (_, i) => `scene_${i + 1}`);
   
   // 데이터 저장용 (누적 시간)
@@ -31,20 +61,27 @@ export default function WebtoonPage() {
     }
   };
 
-  // 서버로 전송 (탭 닫거나 숨길 때)
   const flushStats = () => {
-    const data = statsRef.current;
-    if (Object.keys(data).length === 0) return;
-    
-    console.log('🚀 [서버 전송] 최종 데이터:', data);
-    
-    const payload = JSON.stringify({ episodeId, stats: data });
+    const raw = statsRef.current;
+    if (Object.keys(raw).length === 0) return;
+
+    const smoothed = smoothStats(raw, sections); // 전송 직전에만 스무딩
+
+    console.log('🚀 [서버 전송]', { raw, smoothed });
+
+    const payload = JSON.stringify({
+      episodeId,
+      stats: smoothed,
+      rawStats: raw, // 원본도 함께 보내면 백엔드에서 양쪽 비교 가능
+    });
+
     if (navigator.sendBeacon) {
       navigator.sendBeacon('/api/stats/flush', payload);
     } else {
       fetch('/api/stats/flush', { method: 'POST', body: payload, keepalive: true });
     }
-    statsRef.current = {}; // 전송 후 초기화
+
+    statsRef.current = {};
   };
 
   useEffect(() => {
@@ -105,7 +142,7 @@ export default function WebtoonPage() {
       {/* 웹툰 본문 컨테이너 */}
       <div style={{ position: 'relative', width: '100%' }}>
         <img 
-          src="https://placehold.co/600x20000/222/white?text=WEBTOON+CONTENT" 
+          src={example.src}
           alt="webtoon" 
           style={{ width: '100%', display: 'block' }} 
           loading="lazy"

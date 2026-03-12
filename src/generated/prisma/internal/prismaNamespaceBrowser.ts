@@ -73,6 +73,7 @@ export const WebtoonSceneStatScalarFieldEnum = {
   sceneId: 'sceneId',
   viewDate: 'viewDate',
   totalDuration: 'totalDuration',
+  rawDuration: 'rawDuration',
   viewCount: 'viewCount'
 } as const
 
